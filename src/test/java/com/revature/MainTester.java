@@ -34,7 +34,7 @@ public class MainTester {
 
         LinkedList<Integer> lOut = Main.mergeSortedLinkedList(l);
         LinkedList<Integer> lAnswer = new LinkedList<>(Arrays.asList(1,1,2,3,4,4,5,6));
-        for(int i = 0; i < lOut.element();i++){
+        for(int i = 0; i < lOut.size();i++){
             Assertions.assertTrue(lOut.get(i).equals( lAnswer.get(i)));
         }
 
@@ -46,7 +46,7 @@ public class MainTester {
 
         LinkedList<Integer> lOut = Main.mergeSortedLinkedList(l);
         LinkedList<Integer> lAnswer = new LinkedList<>();
-        for(int i = 0; i < lOut.element();i++){
+        for(int i = 0; i < lOut.size();i++){
             Assertions.assertTrue(lOut.get(i).equals( lAnswer.get(i)));
         }
     }
@@ -58,7 +58,7 @@ public class MainTester {
 
         LinkedList<Integer> lOut = Main.mergeSortedLinkedList(l);
         LinkedList<Integer> lAnswer = new LinkedList<>();
-        for(int i = 0; i < lOut.element();i++){
+        for(int i = 0; i < lOut.size();i++){
             Assertions.assertTrue(lOut.get(i).equals( lAnswer.get(i)));
         }
     }
