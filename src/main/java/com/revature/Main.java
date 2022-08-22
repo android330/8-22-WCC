@@ -35,6 +35,7 @@ public class Main {
                 : (double) (minVals.peek() + maxVals.peek())/2;
     }
 
+    // merges the linked lists and returns a longer, sorted, linked list
     public static LinkedList<Integer> mergeSortedLinkedList(ArrayList<LinkedList<Integer>> lists){
         LinkedList<Integer> lReturn = new LinkedList<>();
         for(LinkedList<Integer> lInner: lists){
