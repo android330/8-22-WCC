@@ -24,6 +24,21 @@ public class MainTester {
         Assertions.assertEquals(2.50000, out);
     }
 
+    @Test
+    void MedianCustomTest1(){
+        int[] nums1 = {1,2,4,5,6,7,8,9};
+        int[] nums2 = {3,4,12,23,234,532};
+        double out = Main.medianTwoSortedArrays(nums1,nums2);
+        Assertions.assertEquals(6.5, out);
+    }
+
+    @Test
+    void MedianCustomTest2(){
+        int[] nums1 = {7,8,9,12,33,36,66};
+        int[] nums2 = {1,2,5};
+        double out = Main.medianTwoSortedArrays(nums1,nums2);
+        Assertions.assertEquals(8.5, out);
+    }
 
     @Test
     void MergeExample1(){

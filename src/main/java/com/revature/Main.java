@@ -1,34 +1,66 @@
 package com.revature;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
-    // must adhere to O(log(m+n)) time complexity
+    // must adhere to O(log(m+n)) time complexity - sorting is O(n)
+    // Use dual priority to ques to keep track of medium value whilest maintaining a log(n) insertion complexity
     public static double medianTwoSortedArrays(int[] nums1, int[] nums2){
+        PriorityQueue<Integer> maxVals = new PriorityQueue<>(Integer::compare);
+        PriorityQueue<Integer> minVals = new PriorityQueue<>((x, y) -> Integer.compare(y, x));
 
+        for(int i: nums1){
+            // if the value is larger than the top of max value priority que, then it is added to max value priority que
+            // if not, then it is added to the min value priority que
+            if(!maxVals.isEmpty()) {
+                if (i > maxVals.peek())
+                    maxVals.add(i);
+                 else
+                    minVals.add(i);
+            }else {
+                maxVals.add(i);
+            }
 
-        // if sum even
-        if((nums1.length%2==0 && nums2.length%2==0) || (nums1.length%2!=0 && nums2.length%2!=0)){
-            return (double)(nums1[(nums1.length-1)/2] + nums2[(nums2.length-1)/2])/2;
+            // balances the two ques
+            if(maxVals.size() - minVals.size() -1 > 0)
+                minVals.add(maxVals.poll());
+            else if(minVals.size() - maxVals.size() -1 > 0)
+                maxVals.add(minVals.poll());
         }
-        // if sum odd
-        else{
 
+        for(int i: nums2){
+            // if the value is larger than the top of max value priority que, then it is added to max value priority que
+            // if not, then it is added to the min value priority que
+            if(!maxVals.isEmpty()) {
+                if (i > maxVals.peek())
+                    maxVals.add(i);
+                 else
+                    minVals.add(i);
+            }else {
+                maxVals.add(i);
+            }
+
+            // balances the two ques
+            if(maxVals.size() - minVals.size() -1 > 0)
+                minVals.add(maxVals.poll());
+            else if(minVals.size() - maxVals.size() -1 > 0)
+                maxVals.add(minVals.poll());
         }
 
-        return 0;
+        // determines which heap to return from, or peek from both and return average with elongated ternary statement
+        return maxVals.size() > minVals.size() ? maxVals.peek()
+                : minVals.size() > maxVals.size() ? minVals.peek()
+                : maxVals.isEmpty() ? 0
+                : (double) (minVals.peek() + maxVals.peek())/2;
     }
 
     public static LinkedList<Integer> mergeSortedLinkedList(ArrayList<LinkedList<Integer>> lists){
-        LinkedList<Integer> l = new LinkedList<>();
-        for(LinkedList<Integer> i: lists){
-            for(Integer in: i){
-                l.add(in);
-            }
+        LinkedList<Integer> lReturn = new LinkedList<>();
+        for(LinkedList<Integer> lInner: lists){
+            lReturn.addAll(lInner);
         }
 
-        Collections.sort(l);
-        return l;
+        Collections.sort(lReturn);
+        return lReturn;
     }
 }
