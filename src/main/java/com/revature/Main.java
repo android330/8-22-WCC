@@ -7,47 +7,28 @@ public class Main {
     // Use dual priority to ques to keep track of medium value whilest maintaining a log(n) insertion complexity
     public static double medianTwoSortedArrays(int[] nums1, int[] nums2){
         PriorityQueue<Integer> maxVals = new PriorityQueue<>(Integer::compare);
+        // priority que for min values has inverted comparator
         PriorityQueue<Integer> minVals = new PriorityQueue<>((x, y) -> Integer.compare(y, x));
 
-        for(int i: nums1){
-            // if the value is larger than the top of max value priority que, then it is added to max value priority que
-            // if not, then it is added to the min value priority que
-            if(!maxVals.isEmpty()) {
-                if (i > maxVals.peek())
-                    maxVals.add(i);
-                 else
-                    minVals.add(i);
-            }else {
-                maxVals.add(i);
-            }
+        // do for both int arrays
+        for(int[] intArray: new int[][]{nums1,nums2}) {
+            for (int value : intArray) {
+                // if the value is larger than the top of max value priority que, then it is added to max value priority que
+                // if not, then it is added to the min value priority que
+                if (!maxVals.isEmpty() && value <= maxVals.peek())
+                    minVals.add(value);
+                else
+                    maxVals.add(value);
 
-            // balances the two ques
-            if(maxVals.size() - minVals.size() -1 > 0)
-                minVals.add(maxVals.poll());
-            else if(minVals.size() - maxVals.size() -1 > 0)
-                maxVals.add(minVals.poll());
+                // balances the two ques
+                if (maxVals.size() - minVals.size() - 1 > 0)
+                    minVals.add(maxVals.poll());
+                else if (minVals.size() - maxVals.size() - 1 > 0)
+                    maxVals.add(minVals.poll());
+            }
         }
 
-        for(int i: nums2){
-            // if the value is larger than the top of max value priority que, then it is added to max value priority que
-            // if not, then it is added to the min value priority que
-            if(!maxVals.isEmpty()) {
-                if (i > maxVals.peek())
-                    maxVals.add(i);
-                 else
-                    minVals.add(i);
-            }else {
-                maxVals.add(i);
-            }
-
-            // balances the two ques
-            if(maxVals.size() - minVals.size() -1 > 0)
-                minVals.add(maxVals.poll());
-            else if(minVals.size() - maxVals.size() -1 > 0)
-                maxVals.add(minVals.poll());
-        }
-
-        // determines which heap to return from, or peek from both and return average with elongated ternary statement
+        // determines which heap/que to return from, or peek from both and return average with elongated ternary statement
         return maxVals.size() > minVals.size() ? maxVals.peek()
                 : minVals.size() > maxVals.size() ? minVals.peek()
                 : maxVals.isEmpty() ? 0
